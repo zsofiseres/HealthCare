@@ -3,16 +3,23 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainScreen implements Initializable {
+public class MainScreenController implements Initializable {
 
     @FXML
     private ImageView menuImg;
@@ -28,6 +35,20 @@ public class MainScreen implements Initializable {
 
     @FXML
     private AnchorPane menuPane;
+
+    public void changeScreenPatientScreen(ActionEvent event) throws IOException {
+
+        Parent loader = FXMLLoader.load(getClass().getResource("PatientsScreen.fxml"));
+        Scene scene = new Scene(loader);
+        //scene.getStylesheets().addAll(getClass().getResource("styleMain.css").toExternalForm());
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+        FadeTransition fadeTransition=new FadeTransition(Duration.seconds(0.5),loader);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
 
 
     @Override
@@ -72,8 +93,6 @@ public class MainScreen implements Initializable {
             translateTransition1.setByX(-600);
             translateTransition1.play();
         });
-
-
 
     }
 }
