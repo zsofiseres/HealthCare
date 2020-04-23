@@ -40,7 +40,7 @@ public class MainScreenController implements Initializable {
 
         Parent loader = FXMLLoader.load(getClass().getResource("PatientsScreen.fxml"));
         Scene scene = new Scene(loader);
-        //scene.getStylesheets().addAll(getClass().getResource("styleMain.css").toExternalForm());
+        scene.getStylesheets().addAll(getClass().getResource("StyleTable.css").toExternalForm());
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();

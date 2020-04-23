@@ -12,9 +12,9 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.util.Callback;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class PatientScreenController implements Initializable {
 
@@ -84,7 +84,6 @@ public class PatientScreenController implements Initializable {
     ObservableList<Model> list;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             genderCombo.getItems().addAll("Male", "Female");
@@ -141,6 +140,10 @@ public class PatientScreenController implements Initializable {
         //list.addAll(new Model("adel", "dfg","bp", "female"));
 
         //list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
+    }
+
+    public void addAction(javafx.event.ActionEvent actionEvent) {
+        list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
     }
     /*public void addToTable(ActionEvent event){
         list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));

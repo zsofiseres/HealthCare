@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="797.0" prefWidth="1260.0" stylesheets="@SyleTable.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PatientScreenController">
+<AnchorPane prefHeight="797.0" prefWidth="1260.0" stylesheets="@StyleTable.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PatientScreenController">
    <children>
       <JFXTreeTableView fx:id="treeTableView" layoutX="47.0" prefHeight="797.0" prefWidth="810.0">
          <columns>
@@ -33,10 +33,10 @@
       <JFXTextField fx:id="searchTF" focusColor="#1da0b2" labelFloat="true" layoutX="893.0" layoutY="23.0" prefHeight="16.0" prefWidth="345.0" promptText="Search" unFocusColor="#b2acac" />
       <HBox layoutX="862.0" layoutY="75.0" prefHeight="55.0" prefWidth="395.0">
          <children>
-            <JFXButton id="AddBtn" fx:id="addBtn" prefHeight="75.0" prefWidth="109.0" stylesheets="@SyleTable.css" text="ADD" textFill="WHITE" />
-            <JFXButton id="DeleteBtn" fx:id="deleteBtn" prefHeight="75.0" prefWidth="109.0" stylesheets="@SyleTable.css" text="DELETE" textFill="#6b1515" />
-            <JFXButton id="EditBtn" fx:id="editBtn" prefHeight="75.0" prefWidth="109.0" stylesheets="@SyleTable.css" text="EDIT" textFill="WHITE" />
-            <JFXButton id="ClearBtn" fx:id="clearBtn" prefHeight="55.0" prefWidth="99.0" stylesheets="@SyleTable.css" text="CLEAR" textFill="WHITE" />
+            <JFXButton id="AddBtn" fx:id="addBtn" onAction="#addAction" prefHeight="75.0" prefWidth="109.0" stylesheets="@StyleTable.css" text="ADD" textFill="WHITE" />
+            <JFXButton id="DeleteBtn" fx:id="deleteBtn" prefHeight="75.0" prefWidth="109.0" stylesheets="@StyleTable.css" text="DELETE" textFill="#6b1515" />
+            <JFXButton id="EditBtn" fx:id="editBtn" prefHeight="75.0" prefWidth="109.0" stylesheets="@StyleTable.css" text="EDIT" textFill="WHITE" />
+            <JFXButton id="ClearBtn" fx:id="clearBtn" prefHeight="55.0" prefWidth="99.0" stylesheets="@StyleTable.css" text="CLEAR" textFill="WHITE" />
          </children>
       </HBox>
       <AnchorPane layoutX="866.0" layoutY="140.0" prefHeight="320.0" prefWidth="388.0" style="-fx-border-color: #000;" AnchorPane.bottomAnchor="337.0" AnchorPane.leftAnchor="866.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="140.0">
