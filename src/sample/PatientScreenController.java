@@ -2,6 +2,7 @@ package sample;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
 public class PatientScreenController implements Initializable {
@@ -137,15 +139,59 @@ public class PatientScreenController implements Initializable {
         treeTableView.setShowRoot(false);
 
         list.addAll(new Model("adel","123","Eger,Kálnoky","Female","Bromicriptin", "1996", "yesterday", "hormonde level increased"));
-        //list.addAll(new Model("adel", "dfg","bp", "female"));
 
-        //list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
+        //Adding action to the search textfield
+        searchTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                treeTableView.setPredicate(new Predicate<TreeItem<Model>>() {
+                    @Override
+                    public boolean test(TreeItem<Model> modelTreeItem) {
+                        return modelTreeItem.getValue().name.getValue().contains(newValue) | modelTreeItem.getValue().id.getValue().contains(newValue);
+                    }
+                });
+            }
+        });
+
+        treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        showDetails(newValue);
+                    }
+                );
     }
 
+    //Add new row to the table
     public void addAction(javafx.event.ActionEvent actionEvent) {
         list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
     }
-    /*public void addToTable(ActionEvent event){
-        list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
-    }*/
+    public void deleteAction(javafx.event.ActionEvent event){
+        int index = treeTableView.getSelectionModel().getSelectedIndex();
+        list.remove(index);
+        clearFields();
+    }
+    public void showDetails(TreeItem<Model>treeItem){
+        nameTF.setText(treeItem.getValue().getName());
+        nameLB.setText(treeItem.getValue().getName());
+
+        idTF.setText(treeItem.getValue().getId());
+        idLB.setText(treeItem.getValue().getId());
+
+        genderCombo.getSelectionModel().select(treeItem.getValue().getGender());
+
+        addressTF.setText(treeItem.getValue().getAddress());
+        addressLB.setText(treeItem.getValue().getAddress());
+    }
+    public void editAction(){
+        TreeItem<Model>treeItem=treeTableView.getSelectionModel().getSelectedItem();
+        Model model = new Model (nameTF.getText(),idTF.getText(),addressTF.getText(),genderCombo.getSelectionModel().getSelectedItem());
+        treeItem.setValue(model);
+    }
+    public void clearFields(){
+        nameTF.setText("");
+        idTF.setText("");
+        addressTF.setText("");
+        genderCombo.getSelectionModel().select("");
+    }
+    public void clearAction(javafx.event.ActionEvent event) {
+        clearFields();
+    }
 }
