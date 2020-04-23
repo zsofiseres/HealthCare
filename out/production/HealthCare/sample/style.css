@@ -1,0 +1,14 @@
+#patientsBtn{
+    -fx-background-color:  #1e9fb0;
+}
+
+#patientsBtn :hover{
+    -fx-background-color: #ffb92e;
+    -fx-border-color:#ffb92e;
+}
+#appointmentsBtn{
+    -fx-background-color:  #1e9fb0;
+}
+#appointmentsBtn :hover{
+    -fx-background-color: #ffb92e;
+}
