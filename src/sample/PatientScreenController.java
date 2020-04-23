@@ -1,9 +1,6 @@
 package sample;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PationtScreenController implements Initializable {
+public class PatientScreenController implements Initializable {
 
     @FXML
     private JFXTreeTableView<Model> treeTableView;
@@ -31,13 +28,13 @@ public class PationtScreenController implements Initializable {
     private TreeTableColumn<Model, String> birthCol;
 
     @FXML
-    private TreeTableColumn<Model, String > diagnosisCol;
+    private TreeTableColumn<Model, String> diagnosisCol;
 
     @FXML
-    private TreeTableColumn<Model, String > medsCol;
+    private TreeTableColumn<Model, String> medsCol;
 
     @FXML
-    private TreeTableColumn<Model, String > lastVisitCol;
+    private TreeTableColumn<Model, String> lastVisitCol;
 
     @FXML
     private JFXTextField searchTF;
@@ -72,11 +69,21 @@ public class PationtScreenController implements Initializable {
     @FXML
     private TreeTableColumn<Model, String > addressCol;
 
+    @FXML
+    private JFXButton addBtn;
+
+    @FXML
+    private JFXButton deleteBtn;
+
+    @FXML
+    private JFXButton editBtn;
+
+    @FXML
+    private JFXButton clearBtn;
+
     ObservableList<Model> list;
 
-    public void addAction(ActionEvent event){
-        list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(),genderCombo.getSelectionModel().getSelectedItem()));
-    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -131,5 +138,11 @@ public class PationtScreenController implements Initializable {
         treeTableView.setShowRoot(false);
 
         list.addAll(new Model("adel","123","Eger,Kálnoky","Female","Bromicriptin", "1996", "yesterday", "hormonde level increased"));
+        //list.addAll(new Model("adel", "dfg","bp", "female"));
+
+        //list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
     }
+    /*public void addToTable(ActionEvent event){
+        list.addAll(new Model(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
+    }*/
 }
