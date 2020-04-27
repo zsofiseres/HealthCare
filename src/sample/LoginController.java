@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
     }
     public void GetStartedBtn(ActionEvent event) throws IOException {
         try {
-            /*if(loginModel.isLogin(this.username.getText(),this.password.getText())) */{
+            if(loginModel.isLogin(this.username.getText(),this.password.getText())) {
                 Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
                 Scene scene = new Scene(loader);
                 scene.getStylesheets().addAll(getClass().getResource("styleMain.css").toExternalForm());
@@ -116,9 +116,9 @@ public class LoginController implements Initializable {
                 fadeTransition.setFromValue(0);
                 fadeTransition.setToValue(1);
                 fadeTransition.play();
-            }/*else{
+            }else{
                 loginStatus.setText("Wrong username or password");
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
