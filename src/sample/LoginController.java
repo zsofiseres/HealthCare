@@ -105,6 +105,7 @@ public class LoginController implements Initializable {
     }
     public void GetStartedBtn(ActionEvent event) throws IOException {
         try {
+            //ha a felhasználónév és email is helyes akkor a MainScreenre váltunk
             if(loginModel.isLogin(this.username.getText(),this.password.getText())) {
                 Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
                 Scene scene = new Scene(loader);
