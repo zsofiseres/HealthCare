@@ -49,7 +49,7 @@
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <Label fx:id="loginStatus" layoutX="69.0" layoutY="330.0" prefHeight="21.0" prefWidth="249.0" text="Label" />
+            <Label fx:id="loginStatus" alignment="CENTER" layoutX="69.0" layoutY="330.0" prefHeight="21.0" prefWidth="249.0" text="Label" />
          </children>
       </Pane>
    </children>

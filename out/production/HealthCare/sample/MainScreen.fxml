@@ -63,12 +63,17 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton prefHeight="128.0" prefWidth="256.0" text="HOME" textFill="WHITE">
+                  <JFXButton fx:id="homeBtn" prefHeight="128.0" prefWidth="256.0" text="HOME" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </JFXButton>
                   <ImageView fitHeight="70.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true" />
+                  <JFXButton fx:id="LogoutBtn" onAction="#changeScreenLogin" prefHeight="31.0" prefWidth="259.0" text="LOG OUT" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </JFXButton>
                </children>
             </GridPane>
          </children>

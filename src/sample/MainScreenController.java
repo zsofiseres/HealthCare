@@ -35,6 +35,8 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private AnchorPane menuPane;
+    @FXML
+    private JFXButton LogoutBtn;
 
     public void changeScreenPatientScreen(ActionEvent event) throws IOException {
 
@@ -49,7 +51,19 @@ public class MainScreenController implements Initializable {
         fadeTransition.setToValue(1);
         fadeTransition.play();
     }
+    public void changeScreenLogin(ActionEvent event) throws IOException {
 
+        Parent loader = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Scene scene = new Scene(loader);
+        scene.getStylesheets().addAll(getClass().getResource("StyleTable.css").toExternalForm());
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+        FadeTransition fadeTransition=new FadeTransition(Duration.seconds(0.5),loader);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

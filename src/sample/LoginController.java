@@ -65,7 +65,7 @@ public class LoginController implements Initializable {
         pane2.setStyle("-fx-background-image: url(\"/sample/1.jpg\")");
         pane3.setStyle("-fx-background-image: url(\"/sample/3.jpg\")");
         pane4.setStyle("-fx-background-image: url(\"/sample/2.jpg\")");
-
+        loginStatus.setVisible(false);
         backgroundAnimation();
 
         if(loginModel.isDbConnected()){
@@ -118,6 +118,7 @@ public class LoginController implements Initializable {
                 fadeTransition.setToValue(1);
                 fadeTransition.play();
             }else{
+                loginStatus.setVisible(true);
                 loginStatus.setText("Wrong username or password");
             }
         } catch (Exception e) {
