@@ -18,7 +18,7 @@ public class Main extends Application {
     }
     public void mainWindow() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         AnchorPane pane= loader.load();
         Scene scene = new Scene(pane);
         scene.getStylesheets().addAll(getClass().getResource("style.css").toExternalForm());

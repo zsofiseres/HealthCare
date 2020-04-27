@@ -15,8 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.event.ActionEvent;
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -57,7 +55,7 @@ public class CreateAccount implements Initializable {
     }
 
     private void BacktoMainScene(MouseEvent event) throws IOException {
-        Parent loader = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent loader = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Scene scene = new Scene(loader);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
