@@ -25,6 +25,7 @@ public class LoginController implements Initializable {
 
     LoginModel loginModel = new LoginModel();
 
+
     @FXML
     private AnchorPane rootPane;
 
@@ -107,6 +108,8 @@ public class LoginController implements Initializable {
         try {
             //ha a felhasználónév és email is helyes akkor a MainScreenre váltunk
             if(loginModel.isLogin(this.username.getText(),this.password.getText())) {
+                //doctorModel=new DoctorModel(this.username.getText()); //sikeres belépéskor beállítja a doki usernamet
+                //doctorModel.SetDocID(); //lekérdezi username alapján a docid-t
                 Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
                 Scene scene = new Scene(loader);
                 scene.getStylesheets().addAll(getClass().getResource("styleMain.css").toExternalForm());

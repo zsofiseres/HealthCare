@@ -8,6 +8,8 @@ import java.sql.SQLException;
 public class LoginModel {
 
     Connection connection;
+    DoctorModel doctorModel;
+
     public LoginModel(){
         try{
             this.connection = dbConnection.getConn();
@@ -35,6 +37,8 @@ public class LoginModel {
             rs= pr.executeQuery();
 
             if(rs.next()){
+                doctorModel= new DoctorModel(user);
+                doctorModel.setID(rs.getString(6));
                 return true;
             }
             return false;

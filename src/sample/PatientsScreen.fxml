@@ -27,9 +27,6 @@
          <columns>
             <TreeTableColumn fx:id="nameCol" prefWidth="75.0" text="NAME" />
             <TreeTableColumn fx:id="birthCol" prefWidth="75.0" text="BIRTH DATE" />
-            <TreeTableColumn fx:id="diagnosisCol" prefWidth="75.0" text="DIAGNOSIS" />
-            <TreeTableColumn fx:id="medsCol" prefWidth="75.0" text="MEDICINES" />
-            <TreeTableColumn fx:id="lastVisitCol" prefWidth="75.0" text="LAST VISIT" />
             <TreeTableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
             <TreeTableColumn fx:id="addressCol" prefWidth="75.0" text="ADDRESS" />
          </columns>

@@ -46,15 +46,6 @@ public class PatientScreenController implements Initializable {
     private TreeTableColumn<PatientData, String> birthCol;
 
     @FXML
-    private TreeTableColumn<PatientData, String> diagnosisCol;
-
-    @FXML
-    private TreeTableColumn<PatientData, String> medsCol;
-
-    @FXML
-    private TreeTableColumn<PatientData, String> lastVisitCol;
-
-    @FXML
     private JFXTextField searchTF;
 
     @FXML
@@ -113,8 +104,8 @@ public class PatientScreenController implements Initializable {
 
     ObservableList<PatientData> list;
     private dbConnection dc;
-    private String sql = "SELECT * FROM  patients";
-    private String sqlInsert= "INSERT INTO patients(Name,ID,Birthdate,Address,Gender,Diagnosis,Medicines,Lastvisit) VALUES (?,?,?,?,?,?,?,?)";
+    private String sql = "SELECT * FROM  patients WHERE DOCID =?";
+    private String sqlInsert= "INSERT INTO patients(Name,ID,Birthdate,Address,Gender,DOCID) VALUES (?,?,?,?,?,?)";
     private String sqlDelete="DELETE FROM patients WHERE ID = ?";
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -189,15 +180,14 @@ public class PatientScreenController implements Initializable {
     public void addAction(javafx.event.ActionEvent actionEvent) {
         try {
             Connection conn = dbConnection.getConn();
+            String docid= DoctorModel.getID();
             PreparedStatement pr = conn.prepareStatement(sqlInsert);
             pr.setString(1,nameTF.getText());
             pr.setString(2,idTF.getText());
             pr.setString(3,"NULL");
             pr.setString(4,addressTF.getText());
             pr.setString(5,genderCombo.getSelectionModel().getSelectedItem());
-            pr.setString(6,"NULL");
-            pr.setString(7,"NULL");
-            pr.setString(8,"NULL");
+            pr.setString(6,docid);
             pr.execute();
             conn.close();
         } catch (SQLException throwables) {
@@ -205,6 +195,7 @@ public class PatientScreenController implements Initializable {
         }
         list.addAll(new PatientData(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
     }
+    //Delete row from table
     public void deleteAction(javafx.event.ActionEvent event){
         int index = treeTableView.getSelectionModel().getSelectedIndex();
         TreeItem<PatientData> patientData = treeTableView.getSelectionModel().getSelectedItem();
@@ -250,13 +241,22 @@ public class PatientScreenController implements Initializable {
     public void clearAction(javafx.event.ActionEvent event) {
         clearFields();
     }
+
+    //Patiens data load from table to patients view table
     public void loadPatientsData(){
         try{
+            String id= DoctorModel.getID();
+            System.out.println(id);
             Connection conn = dbConnection.getConn();
+            PreparedStatement pr = null;
+            ResultSet rs = null;
+            pr = conn.prepareStatement(sql);
+            pr.setString(1,id);
 
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+            rs= pr.executeQuery();
+
             while(rs.next()){
-                this.list.add(new PatientData(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)));
+                this.list.add(new PatientData(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
             }
 
         } catch (SQLException throwables) {
@@ -280,30 +280,14 @@ public class PatientScreenController implements Initializable {
                 return param.getValue().getValue().birthdate;
             }
         });
-        diagnosisCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
-                return param.getValue().getValue().diagnosis;
-            }
-        });
-        medsCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
-                return param.getValue().getValue().medicines;
-            }
-        });
+
         idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
                 return param.getValue().getValue().id;
             }
         });
-        lastVisitCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
-                return param.getValue().getValue().lastvisit;
-            }
-        });
+
     }
     public void changeScreenHome(ActionEvent event) throws IOException {
 

@@ -10,19 +10,13 @@ public class PatientData extends RecursiveTreeObject<PatientData> {
     public StringProperty id;
     public  StringProperty address;
     public  StringProperty gender;
-    public  StringProperty diagnosis;
-    public  StringProperty medicines;
-    public  StringProperty lastvisit;
     public  StringProperty birthdate;
 
-    public PatientData(String name, String id,String birthdate, String address,String gender,String diagnosis, String medicine,  String lastvisit) {
+    public PatientData(String name, String id,String birthdate, String address,String gender) {
         this.name = new SimpleStringProperty(name);
         this.id= new SimpleStringProperty(id);
         this.address= new SimpleStringProperty(address);
         this.gender=new SimpleStringProperty(gender);
-        this.medicines=new SimpleStringProperty(medicine);
-        this.diagnosis=new SimpleStringProperty(diagnosis);
-        this.lastvisit=new SimpleStringProperty(lastvisit);
         this.birthdate = new SimpleStringProperty(birthdate);
     }
     public PatientData(String name, String id, String address,String gender){
@@ -78,42 +72,6 @@ public class PatientData extends RecursiveTreeObject<PatientData> {
 
     public void setGender(String gender) {
         this.gender.set(gender);
-    }
-
-    public String getDiagnosis() {
-        return diagnosis.get();
-    }
-
-    public StringProperty diagnosisProperty() {
-        return diagnosis;
-    }
-
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis.set(diagnosis);
-    }
-
-    public String getMedicines() {
-        return medicines.get();
-    }
-
-    public StringProperty medicinesProperty() {
-        return medicines;
-    }
-
-    public void setMedicines(String medicines) {
-        this.medicines.set(medicines);
-    }
-
-    public String getLastvisit() {
-        return lastvisit.get();
-    }
-
-    public StringProperty lastvisitProperty() {
-        return lastvisit;
-    }
-
-    public void setLastvisit(String lastvisit) {
-        this.lastvisit.set(lastvisit);
     }
 
     public String getBirthdate() {

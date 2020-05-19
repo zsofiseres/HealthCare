@@ -32,7 +32,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("signIn.fxml"));
         AnchorPane pane= loader.load();
         Scene scene1 = new Scene(pane);
-        CreateAccount controller=loader.getController();
+        CreateAccountController controller=loader.getController();
         controller.setMain(stage,this);
         stage.setScene(scene1);
         //stage.show();
