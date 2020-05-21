@@ -1,17 +1,26 @@
 package controllers;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 public class Main extends Application {
     Stage stage,createSignInStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String appConfigPath = rootPath + "app.properties";
+        Properties appProps = new Properties();
+        appProps.load(new FileInputStream(appConfigPath));
+        String appVersion = appProps.getProperty("version");
+        System.out.println("Appversion:"+appVersion);
         this.stage = primaryStage;
         mainWindow();
     }
