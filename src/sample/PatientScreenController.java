@@ -37,19 +37,22 @@ import java.util.function.Predicate;
 public class PatientScreenController implements Initializable {
 
     @FXML
-    private JFXTreeTableView<PatientData> treeTableView;
+    private JFXTreeTableView<PatientModel> treeTableView;
 
     @FXML
-    private TreeTableColumn<PatientData, String> nameCol;
+    private TreeTableColumn<PatientModel, String> nameCol;
 
     @FXML
-    private TreeTableColumn<PatientData, String> birthCol;
+    private TreeTableColumn<PatientModel, String> birthCol;
 
     @FXML
     private JFXTextField searchTF;
 
     @FXML
     private JFXTextField nameTF;
+
+    @FXML
+    private JFXDatePicker birthPicker;
 
     @FXML
     private JFXTextField idTF;
@@ -73,10 +76,10 @@ public class PatientScreenController implements Initializable {
     private Label genderLB;
 
     @FXML
-    private TreeTableColumn<PatientData, String> idCol;
+    private TreeTableColumn<PatientModel, String> idCol;
 
     @FXML
-    private TreeTableColumn<PatientData, String > addressCol;
+    private TreeTableColumn<PatientModel, String > addressCol;
 
     @FXML
     private JFXButton addBtn;
@@ -102,18 +105,20 @@ public class PatientScreenController implements Initializable {
     private JFXButton LogoutBtn;
 
 
-    ObservableList<PatientData> list;
+    ObservableList<PatientModel> list;
+
     private dbConnection dc;
     private String sql = "SELECT * FROM  patients WHERE DOCID =?";
     private String sqlInsert= "INSERT INTO patients(Name,ID,Birthdate,Address,Gender,DOCID) VALUES (?,?,?,?,?,?)";
     private String sqlDelete="DELETE FROM patients WHERE ID = ?";
+    private String sqlUpdate="UPDATE patients SET (Name,ID,Birthdate,Address,Gender,DOCID) = (?,?,?,?,?,?) WHERE ID = ? ";
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         genderCombo.getItems().addAll("Male", "Female");
         opacityPane.setVisible(false);
         list = FXCollections.observableArrayList();
-        TreeItem<PatientData> root = new RecursiveTreeItem<PatientData>(list, RecursiveTreeObject ::getChildren);
+        TreeItem<PatientModel> root = new RecursiveTreeItem<PatientModel>(list, RecursiveTreeObject ::getChildren);
         treeTableView.setRoot(root);
         treeTableView.setShowRoot(false);
         loadPatientsData();
@@ -123,9 +128,9 @@ public class PatientScreenController implements Initializable {
         searchTF.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                treeTableView.setPredicate(new Predicate<TreeItem<PatientData>>() {
+                treeTableView.setPredicate(new Predicate<TreeItem<PatientModel>>() {
                     @Override
-                    public boolean test(TreeItem<PatientData> patientTreeItem) {
+                    public boolean test(TreeItem<PatientModel> patientTreeItem) {
                         return patientTreeItem.getValue().name.getValue().contains(newValue) | patientTreeItem.getValue().id.getValue().contains(newValue);
                     }
                 });
@@ -177,14 +182,14 @@ public class PatientScreenController implements Initializable {
     }
 
     //Add new row to the table
-    public void addAction(javafx.event.ActionEvent actionEvent) {
+    public void addAction(ActionEvent actionEvent) {
         try {
             Connection conn = dbConnection.getConn();
             String docid= DoctorModel.getID();
             PreparedStatement pr = conn.prepareStatement(sqlInsert);
             pr.setString(1,nameTF.getText());
             pr.setString(2,idTF.getText());
-            pr.setString(3,"NULL");
+            pr.setString(3,birthPicker.getEditor().getText());
             pr.setString(4,addressTF.getText());
             pr.setString(5,genderCombo.getSelectionModel().getSelectedItem());
             pr.setString(6,docid);
@@ -193,12 +198,12 @@ public class PatientScreenController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        list.addAll(new PatientData(nameTF.getText(), idTF.getText(), addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
+        list.addAll(new PatientModel(nameTF.getText(), idTF.getText(), birthPicker.getEditor().getText(),addressTF.getText(), genderCombo.getSelectionModel().getSelectedItem()));
     }
     //Delete row from table
-    public void deleteAction(javafx.event.ActionEvent event){
+    public void deleteAction(ActionEvent event){
         int index = treeTableView.getSelectionModel().getSelectedIndex();
-        TreeItem<PatientData> patientData = treeTableView.getSelectionModel().getSelectedItem();
+        TreeItem<PatientModel> patientData = treeTableView.getSelectionModel().getSelectedItem();
         System.out.println(patientData.getValue().getId());
         try{
             Connection conn = dbConnection.getConn();
@@ -214,7 +219,7 @@ public class PatientScreenController implements Initializable {
         clearFields();
 
     }
-    public void showDetails(TreeItem<PatientData> treeItem){
+    public void showDetails(TreeItem<PatientModel> treeItem){
         nameTF.setText(treeItem.getValue().getName());
         nameLB.setText(treeItem.getValue().getName());
 
@@ -227,9 +232,25 @@ public class PatientScreenController implements Initializable {
         addressTF.setText(treeItem.getValue().getAddress());
         addressLB.setText(treeItem.getValue().getAddress());
     }
+    //Edite data in table
     public void editAction(){
-        TreeItem<PatientData>treeItem=treeTableView.getSelectionModel().getSelectedItem();
-        PatientData patientData = new PatientData (nameTF.getText(),idTF.getText(),addressTF.getText(),genderCombo.getSelectionModel().getSelectedItem());
+        TreeItem<PatientModel>treeItem=treeTableView.getSelectionModel().getSelectedItem();
+        try{
+            Connection conn = dbConnection.getConn();
+            PreparedStatement pr = conn.prepareStatement(sqlUpdate);
+            pr.setString(1,nameTF.getText());
+            pr.setString(2,idTF.getText());
+            pr.setString(3,birthPicker.getEditor().getText());
+            pr.setString(4,addressTF.getText());
+            pr.setString(5,genderCombo.getSelectionModel().getSelectedItem());
+            pr.setString(6,DoctorModel.getID());
+            pr.setString(7,treeItem.getValue().getId());
+            pr.execute();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        PatientModel patientData = new PatientModel(nameTF.getText(),idTF.getText(),birthPicker.getEditor().getText(),addressTF.getText(),genderCombo.getSelectionModel().getSelectedItem());
         treeItem.setValue(patientData);
     }
     public void clearFields(){
@@ -238,7 +259,7 @@ public class PatientScreenController implements Initializable {
         addressTF.setText("");
         genderCombo.getSelectionModel().select("");
     }
-    public void clearAction(javafx.event.ActionEvent event) {
+    public void clearAction(ActionEvent event) {
         clearFields();
     }
 
@@ -256,34 +277,34 @@ public class PatientScreenController implements Initializable {
             rs= pr.executeQuery();
 
             while(rs.next()){
-                this.list.add(new PatientData(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+                this.list.add(new PatientModel(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
             }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
+        nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientModel, String> param) {
                 return param.getValue().getValue().name;
             }
         });
-        addressCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
+        addressCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientModel, String> param) {
                 return param.getValue().getValue().address;
             }
         });
-        birthCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
+        birthCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientModel, String> param) {
                 return param.getValue().getValue().birthdate;
             }
         });
 
-        idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientData, String>, ObservableValue<String>>() {
+        idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<PatientModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientData, String> param) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<PatientModel, String> param) {
                 return param.getValue().getValue().id;
             }
         });

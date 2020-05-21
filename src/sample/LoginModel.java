@@ -24,6 +24,14 @@ public class LoginModel {
     public boolean isDbConnected(){
         return this.connection != null;
     }
+
+    /**
+     *
+     * @param user
+     * @param pass
+     * @return
+     * @throws Exception
+     */
     public boolean isLogin(String user,String pass) throws Exception{
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -32,7 +40,7 @@ public class LoginModel {
         try{
             pr = this.connection.prepareStatement(sql);
             pr.setString(1,user);
-            pr.setString(2,pass);
+            pr.setString(2,SignUpModel.SecretPassword(pass));
 
             rs= pr.executeQuery();
 

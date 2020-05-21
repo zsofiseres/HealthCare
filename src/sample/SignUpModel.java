@@ -3,18 +3,22 @@ package sample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SignUpModel {
     Connection conn;
-    private StringProperty firstName;
-    private StringProperty lastName;
-    private StringProperty userName;
-    private StringProperty email;
-    private StringProperty password;
-    private StringProperty password2;
+    public StringProperty firstName;
+    public StringProperty lastName;
+    public StringProperty userName;
+    public StringProperty email;
+    public StringProperty password;
+    public StringProperty password2;
+    public SecureRandom random;
 
     public Connection getConn() {
         return conn;
@@ -112,7 +116,7 @@ public class SignUpModel {
         this.password = new SimpleStringProperty(password);
         this.password2 = new SimpleStringProperty(password2);
     }
-    SignUpModel(){
+    public SignUpModel(){
         try {
             this.conn = dbConnection.getConn();
         } catch (SQLException throwables) {
@@ -127,13 +131,34 @@ public class SignUpModel {
         return this.conn != null;
     }
 
+    public static String SecretPassword(String password) throws NoSuchAlgorithmException {
+        // Create MessageDigest instance for MD5
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        //Add password bytes to digest
+        md.update(password.getBytes());
+        //Get the hash's bytes
+        byte[] bytes = md.digest();
+        //This bytes[] has bytes in decimal format;
+        //Convert it to hexadecimal format
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i< bytes.length ;i++)
+        {
+            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        //Get complete hashed password in hex format
+       return sb.toString();
+    }
+
     public boolean isSignUp(String firstName, String lastName, String userName, String email, String password) throws SQLException {
         PreparedStatement pr =null;
         String sql = "INSERT INTO login(email, password, firstname, lastname, username) VALUES (?,?,?,?,?)";
         try {
+
+            String pass=SecretPassword(password);
+            System.out.println(pass);
             pr = this.conn.prepareStatement(sql);
             pr.setString(1, email);
-            pr.setString(2, password);
+            pr.setString(2, pass);
             pr.setString(3, firstName);
             pr.setString(4, lastName);
             pr.setString(5, userName);
@@ -141,9 +166,11 @@ public class SignUpModel {
             pr.execute();
             conn.close();
             return true;
-        } catch (SQLException throwables) {
+
+        } catch (SQLException | NoSuchAlgorithmException throwables) {
             throwables.printStackTrace();
             return false;
+
         } finally {
             pr.close();
         }

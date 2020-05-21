@@ -119,7 +119,7 @@ public class CreateAccountController implements Initializable {
 
         if(firstNameTF.getText().isEmpty() || lastNameTF.getText().isEmpty() || emailTF.getText().isEmpty() || passwordTF.getText().isEmpty() || password2TF.getText().isEmpty()){
             ErrLabel.setVisible(true);
-            ErrLabel.setText("Pleast fill out every field!");
+            ErrLabel.setText("Please fill out every field!");
         }else{
             if(emailValidator() && isPasswordSame()){
                 signUpModel=new SignUpModel();

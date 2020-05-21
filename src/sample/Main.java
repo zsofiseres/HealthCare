@@ -29,7 +29,7 @@ public class Main extends Application {
 
     public void createSignInWindow() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("signIn.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signin.fxml"));
         AnchorPane pane= loader.load();
         Scene scene1 = new Scene(pane);
         CreateAccountController controller=loader.getController();

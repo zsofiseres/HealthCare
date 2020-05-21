@@ -2,8 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
@@ -52,14 +54,21 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+                  <JFXTextField fx:id="idTF" focusColor="#1da0b2" promptText="ID" unFocusColor="#ababab" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="addressTF" focusColor="#1da0b2" promptText="ADDRESS" unFocusColor="#ababab" GridPane.rowIndex="3" />
+                  <JFXComboBox fx:id="genderCombo" focusColor="#1da0b2" prefHeight="74.0" prefWidth="356.0" promptText="GENDER" GridPane.rowIndex="4" />
                   <JFXTextField fx:id="nameTF" focusColor="#1da0b2" labelFloat="true" promptText="NAME" unFocusColor="#ababab" />
-                  <JFXTextField fx:id="idTF" focusColor="#1da0b2" promptText="ID" unFocusColor="#ababab" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="addressTF" focusColor="#1da0b2" promptText="ADDRESS" unFocusColor="#ababab" GridPane.rowIndex="2" />
-                  <JFXComboBox fx:id="genderCombo" focusColor="#1da0b2" prefHeight="74.0" prefWidth="356.0" promptText="GENDER" GridPane.rowIndex="3" />
+                  <JFXDatePicker fx:id="birthPicker" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="150.0" />
+                     </GridPane.margin>
+                  </JFXDatePicker>
+                  <Label text="BIRTHDATE" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Label layoutX="18.0" layoutY="12.0" text="MANAGEMANT PANE" textFill="#979797">
@@ -114,9 +123,9 @@
                   <Label fx:id="genderLB" alignment="CENTER" prefHeight="21.0" prefWidth="271.0" text="Label" textAlignment="CENTER" textFill="#9e9e9e" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
+            <AnchorPane fx:id="opacityPane" layoutX="-869.0" layoutY="-469.0" opacity="0.18" prefHeight="805.0" prefWidth="1266.0" style="-fx-background-color: #000;" AnchorPane.bottomAnchor="-15.0" AnchorPane.leftAnchor="-870.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="-470.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="opacityPane" opacity="0.18" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane fx:id="menuPane" prefHeight="797.0" prefWidth="256.0" style="-fx-background-color: #1da0b2;">
          <children>
             <GridPane prefHeight="259.0" prefWidth="249.0">

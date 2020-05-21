@@ -4,22 +4,22 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class PatientData extends RecursiveTreeObject<PatientData> {
+public class PatientModel extends RecursiveTreeObject<PatientModel> {
 
     public  StringProperty name;
-    public StringProperty id;
+    public  StringProperty id;
     public  StringProperty address;
     public  StringProperty gender;
     public  StringProperty birthdate;
 
-    public PatientData(String name, String id,String birthdate, String address,String gender) {
+    public PatientModel(String name, String id, String birthdate, String address, String gender) {
         this.name = new SimpleStringProperty(name);
         this.id= new SimpleStringProperty(id);
         this.address= new SimpleStringProperty(address);
         this.gender=new SimpleStringProperty(gender);
         this.birthdate = new SimpleStringProperty(birthdate);
     }
-    public PatientData(String name, String id, String address,String gender){
+    public PatientModel(String name, String id, String address, String gender){
         this.name= new SimpleStringProperty(name);
         this.id = new SimpleStringProperty(id);
         this.address = new SimpleStringProperty(address);

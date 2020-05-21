@@ -51,6 +51,12 @@ public class MainScreenController implements Initializable {
         fadeTransition.setToValue(1);
         fadeTransition.play();
     }
+
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     public void changeScreenLogin(ActionEvent event) throws IOException {
 
         Parent loader = FXMLLoader.load(getClass().getResource("Login.fxml"));
